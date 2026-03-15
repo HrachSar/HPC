@@ -187,3 +187,157 @@ SIMD time:                0.098 sec
 SIMD + Multithreading:    0.041 sec
 
 ********************************************************************************
+Task 3: Grayscale Image Conversion using SIMD and Multithreading
+Objective
+The goal of this assignment is to practice:
+
+    scalar image processing
+    data-level parallelism using SIMD
+    task-level parallelism using multithreading
+    combining SIMD and multithreading
+    performance comparison of different implementations
+
+You will implement several versions of a program that converts a color image to grayscale.
+
+Problem Description
+A color image contains pixels represented by three color channels: R, G, B
+
+Your task is to convert a color image into a grayscale image.
+
+For each pixel, compute the grayscale intensity using the formula:
+
+gray = 0.299 * R + 0.587 * G + 0.114 * B
+
+The resulting grayscale value must then be stored for all three channels of the output pixel:
+
+(gray, gray, gray)
+so that the output image is still a valid color image, but visually grayscale.
+
+Image Format
+For simplicity, use the PPM image format.
+You may use: P3 or P6
+
+Links:
+
+https://paulbourke.net/dataformats/ppm/
+
+https://cs.berea.edu/courses/csc226/tasks/L3.ppm.html
+
+https://netpbm.sourceforge.net/doc/ppm.html
+
+https://en.wikipedia.org/wiki/Netpbm
+
+P6 is recommended because it is simpler and more efficient for performance experiments.
+
+Your program must be able to:
+
+    read the input PPM image
+
+    convert it to grayscale
+
+    save the resulting grayscale image as another PPM image
+
+
+Requirements
+Your program must implement four different versions of the solution:
+
+    Scalar implementation
+    SIMD implementation
+    Multithreading implementation
+    Multithreading + SIMD implementation
+
+Each implementation must process the same input image.
+
+PPM Image Reading and Writing
+
+    Read the image header correctly:
+
+        format (P3 or P6)
+
+        width
+
+        height
+
+        maximum color value
+
+    Load the pixel data into memory.
+
+    Store the image as a linear buffer.
+
+    Save the processed result into an output PPM image.
+
+Scalar Implementation
+
+    Process the image pixel by pixel.
+
+    For each pixel:
+
+        read R, G, B
+
+        compute grayscale intensity
+
+        write (gray, gray, gray) to the output buffer
+
+    Use this version as the reference implementation.
+
+SIMD Implementation
+
+    Use SIMD intrinsics available on your platform.
+    Examples:
+
+        SSE / AVX2 on x86
+
+        NEON on ARM
+    Process multiple pixels in parallel.
+    Compute grayscale values using vector operations.
+    Store the result back into the output buffer.
+    Handle remaining pixels that do not fit into the SIMD vector width.
+
+
+Multithreading Implementation
+
+    Use POSIX threads (pthread).
+
+    Divide the image into chunks.
+
+    Each thread processes one part of the image using a scalar approach.
+
+    Each thread writes results only into its assigned output region.
+
+
+Multithreading + SIMD Implementation
+
+    Divide the image among multiple threads.
+
+    Each thread must process its own chunk using SIMD.
+
+    Merge results implicitly by writing each chunk into the correct output region.
+
+
+
+Performance Measurement
+Measure
+
+    Scalar
+    SIMD
+    Multithreading
+    Multithreading + SIMD
+
+Use a high-resolution timer such as: clock_gettime()
+
+Program Output
+
+Your program should print results in a format similar to:
+Image size: 3840 x 2160
+Threads used: 4
+
+Scalar time: 0.085 sec
+SIMD time: 0.041 sec
+Multithreading time: 0.030 sec
+Multithreading + SIMD time: 0.014 sec
+
+Verification: PASSED
+Output image: gray_output.ppm
+
+
+********************************************************************************
