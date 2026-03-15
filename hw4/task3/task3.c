@@ -73,7 +73,10 @@ int read_ppm(const char *filename){
 
 	for(int i = 0; i < img->width * img->height; i++){
 	    int r, g, b;
-	    fscanf(f, "%d %d %d", &r, &g, &b);
+	    if(fscanf(f, "%d %d %d", &r, &g, &b) != 3){
+		free(img);
+		return 1;		
+	    }
 
 	    img->pixels[i].r = r;
 	    img->pixels[i].g = g;
