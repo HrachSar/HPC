@@ -1,0 +1,15 @@
+Task Description: Write a C program that calculates the Fibonacci sequence using a recursive function. The recursive function should be parallelized using OpenMP tasks to improve performance.
+
+Requirements:
+
+    Implement a recursive function to calculate Fibonacci numbers.
+
+    Use OpenMP to parallelize the computation by creating tasks.
+
+    Ensure that small Fibonacci numbers (e.g., num <= 10) are computed sequentially to reduce overhead.
+
+    Use appropriate synchronization mechanisms to avoid data races.
+
+    The program should take an integer num as input and output F(num)
+
+Hints:
